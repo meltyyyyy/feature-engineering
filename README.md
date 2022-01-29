@@ -6,3 +6,4 @@ This project covers
 
 ### One-Hot-Encoding
 ### Binning or Discretization
+### Adding Interaction Feature and Polynominal Feature
