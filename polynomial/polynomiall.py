@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+from sklearn.svm import SVR
 
 
 class PolynomialFeature:
@@ -18,9 +19,10 @@ class PolynomialFeature:
         print("Entries of X_poly:\n{}".format(self.X_poly[:5]))
         print("Polynomial feature names:\n{}".format(self.poly.get_feature_names_out()))
         self.linear_regression()
+        self.linear_svm()
 
     def linear_regression(self):
-        reg = LinearRegression().fit(self.X_poly,self.y)
+        reg = LinearRegression().fit(self.X_poly, self.y)
 
         line_poly = self.poly.transform(self.line)
         fig = plt.figure()
@@ -30,3 +32,14 @@ class PolynomialFeature:
         plt.xlabel("Input feature")
         plt.plot(self.X[:, 0], self.y, 'o', c='k')
         fig.savefig('polynomial/polynomial_linear_regression.png')
+
+    def linear_svm(self):
+        fig = plt.figure()
+        for gamma in [1, 10]:
+            svr = SVR(gamma=gamma).fit(self.X, self.y)
+            plt.plot(self.line, svr.predict(self.line), label='SVR gamma={}'.format(gamma))
+        plt.plot(self.X[:, 0], self.y, 'o', c='k')
+        plt.ylabel("Regression output")
+        plt.xlabel("Input feature")
+        plt.legend(loc='best')
+        fig.savefig("polynomial/linear_svm.png")
