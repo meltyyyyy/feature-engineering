@@ -16,7 +16,6 @@ class InteractionFeature:
     line_binned = encoder.transform(np.digitize(line, bins=bins))
     X_combined = np.hstack([X, X_binned])
     X_product = np.hstack([X_binned,X*X_binned])
-    print(X_combined.shape)
 
     def main(self):
         self.bin_combined()
