@@ -3,6 +3,8 @@ import mglearn.datasets
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.preprocessing import OneHotEncoder, PolynomialFeatures
 
 
 def execute():
@@ -49,3 +51,13 @@ def execute():
     X_hour_week = np.hstack(
         [citibike.index.dayofweek.to_numpy().reshape(-1, 1), citibike.index.hour.to_numpy().reshape(-1, 1)])
     eval_on_features(X_hour_week, y, regressor)
+
+    eval_on_features(X_hour_week, y, LinearRegression())
+
+    enc = OneHotEncoder()
+    X_hour_week_onehot = enc.fit_transform(X_hour_week).toarray()
+    eval_on_features(X_hour_week_onehot, y, Ridge())
+
+    poly_transformer = PolynomialFeatures(degree=2, interaction_only=True, include_bias=False)
+    X_hour_week_onehot_poly = poly_transformer.fit_transform(X_hour_week_onehot)
+    eval_on_features(X_hour_week_onehot_poly, y, Ridge())
