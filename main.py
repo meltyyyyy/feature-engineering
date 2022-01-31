@@ -1,5 +1,6 @@
 import sys
 
+import example
 from binning.binning import Binning
 from feature_selection import feature_selection
 from interaction_feature.interaction_feature import InteractionFeature
@@ -21,5 +22,7 @@ if __name__ == '__main__':
         interaction_feature.main()
     elif sys.argv[1] == 'feature_selection':
         feature_selection.execute(sys.argv[2])
+    elif sys.argv[1] == 'example':
+        example.execute()
     else:
         print('Invalid augment')
