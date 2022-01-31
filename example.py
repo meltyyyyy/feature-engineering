@@ -41,3 +41,6 @@ def execute():
 
     regressor = RandomForestRegressor(n_estimators=100, random_state=0)
     eval_on_features(X, y, regressor)
+
+    X_hours = citibike.index.hour.to_numpy().reshape(-1,1)
+    eval_on_features(X_hours,y,regressor)
