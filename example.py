@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import mglearn.datasets
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 
@@ -42,5 +43,9 @@ def execute():
     regressor = RandomForestRegressor(n_estimators=100, random_state=0)
     eval_on_features(X, y, regressor)
 
-    X_hours = citibike.index.hour.to_numpy().reshape(-1,1)
-    eval_on_features(X_hours,y,regressor)
+    X_hours = citibike.index.hour.to_numpy().reshape(-1, 1)
+    eval_on_features(X_hours, y, regressor)
+
+    X_hour_week = np.hstack(
+        [citibike.index.dayofweek.to_numpy().reshape(-1, 1), citibike.index.hour.to_numpy().reshape(-1, 1)])
+    eval_on_features(X_hour_week, y, regressor)
